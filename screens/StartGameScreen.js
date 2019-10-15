@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, Text, TouchableWithoutFeedback, View, Keyboard, Alert } from 'react-native'
+import { Alert, Button, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import Card from '../components/Card'
 import Colors from '../constants/colors'
 import Input from '../components/Input'
 import NumberContainer from '../components/NumberContainer'
+import DefaultStyle from '../constants/default-styles'
+import MainButton from '../components/MainButton'
 
 const StartGameScreen = props => {
 
@@ -31,17 +33,14 @@ const StartGameScreen = props => {
     setConfirmed(true)
     setSelectedNumber(chosenNumber)
     setEnteredValue('')
-    props.onConfirm(chosenNumber)
   }
   let confirmedOutput = <Text/>
   if (confirmed) {
     confirmedOutput = (
       <Card style={styles.summaryContainer}>
         <Text>You selected</Text>
-        <View>
-          <NumberContainer>{selectedNumber}</NumberContainer>
-          <Button title="START GAME" onPress={() => {}}/>
-        </View>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <MainButton onPress={() => props.onConfirm(selectedNumber)}>START GAME</MainButton>
       </Card>
     )
   }
@@ -51,7 +50,7 @@ const StartGameScreen = props => {
       <View style={styles.screen}>
         <Text style={styles.title}>Start a New Game!</Text>
         <Card style={styles.inputContainer}>
-          <Text>Select a Number</Text>
+          <Text style={DefaultStyle.bodyText}>Select a Number</Text>
           <Input style={styles.input}
                  blurOnSubmit autoCapitalize='none'
                  autoCorrect={false}
@@ -80,11 +79,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    marginVertical: 10
+    marginVertical: 10,
+    fontFamily: 'open-sans-bold'
   },
   inputContainer: {
-    width: 300,
-    maxWidth: '80%',
+    width: '80%',
+    minWidth: 300,
     alignItems: 'center',
   },
   btnContainer: {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   summaryContainer: {
     marginTop: 20,
-    alignItems: 'center'
+    alignItems: 'center',
   }
 })
 
